@@ -1,0 +1,10 @@
+1. สามารถสร้าง user สำหรับเข้าระบบ (แบบง่าย mongodb)
+2. สามารถ login (แบบง่าย) ด้วย username และ password 
+3. generate token jwt (หลังจาก login) บันทึกอยู่ใน redis database และดึงข้อมูล token ออกมาจาก redis เพื่อนำมาใช้ในการ call api ระบบร้านค้า
+4. สามารถสร้างสินค้า (ชื่อสินค้า รายละเอียดสินค้า ราคา เวลาที่เปิดขายสินค้า จำนวนสินค้า) (mongodb)
+5. แก้ไขรายละเอียดสินค้า (mongodb)
+6. ลบสินค้า (mongodb)
+
+
+redis-server
+redis-cli
