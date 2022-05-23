@@ -21,6 +21,15 @@ func NewProduct(productservice services.ProductService) ProductController {
 func (pc *ProductController) CreateProduct(ctx *gin.Context) {
 	var product models.Product
 	token := ctx.Request.Header.Get("token")
+	if token == "" {
+		ctx.JSON(http.StatusBadGateway, gin.H{"message": "invalid token"})
+		return
+	}
+	errToken := services.JWTAuthService().VerifyToken(token)
+	if errToken != nil {
+		ctx.JSON(http.StatusBadGateway, gin.H{"message": errToken.Error()})
+		return
+	}
 	// token := services.JWTAuthService().GetJWTAuthFromRedis(username)
 	product.Token = token
 	if err := ctx.ShouldBindJSON(&product); err != nil {
@@ -47,6 +56,15 @@ func (pc *ProductController) GetAll(ctx *gin.Context) {
 func (pc *ProductController) UpdateProduct(ctx *gin.Context) {
 	var product models.Product
 	token := ctx.Request.Header.Get("token")
+	if token == "" {
+		ctx.JSON(http.StatusBadGateway, gin.H{"message": "invalid token"})
+		return
+	}
+	errToken := services.JWTAuthService().VerifyToken(token)
+	if errToken != nil {
+		ctx.JSON(http.StatusBadGateway, gin.H{"message": errToken.Error()})
+		return
+	}
 	// token := services.JWTAuthService().GetJWTAuthFromRedis(username)
 	product.Token = token
 	if err := ctx.ShouldBindJSON(&product); err != nil {

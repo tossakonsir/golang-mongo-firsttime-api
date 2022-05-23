@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -15,6 +16,7 @@ type JWTService interface {
 	GenerateToken(username string, isUser bool) error
 	StoreJWTAuthToRedis(username string, token string) error
 	GetJWTAuthFromRedis(username string) string
+	VerifyToken(token string) error
 }
 type authCustomClaims struct {
 	Name string `json:"name"`
@@ -94,4 +96,20 @@ func (service *jwtServices) GetJWTAuthFromRedis(username string) string {
 	}
 
 	return val
+}
+
+func (maker *jwtServices) VerifyToken(token string) error {
+	keyFunc := func(token *jwt.Token) (interface{}, error) {
+		_, ok := token.Method.(*jwt.SigningMethodHMAC)
+		if !ok {
+			return nil, errors.New("InvalidToken")
+		}
+		return []byte(maker.secretKey), nil
+	}
+
+	_, err := jwt.Parse(token, keyFunc)
+	if err != nil {
+		return err
+	}
+	return nil
 }

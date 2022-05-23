@@ -3,7 +3,6 @@ package controllers
 import (
 	"example/models"
 	"example/services"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -52,8 +51,8 @@ func (uc *UserController) Login(ctx *gin.Context) {
 	}
 	// uc.RoundTrip(ctx.Request, user.Username)
 	// fmt.Println("#$$$$$$$$$$$$$$    " + ctx.FullPath())
-	fmt.Println("token from redis    " + services.JWTAuthService().GetJWTAuthFromRedis(user.Username))
-	ctx.JSON(http.StatusOK, gin.H{"message": "success"})
+	// fmt.Println("token from redis    " + services.JWTAuthService().GetJWTAuthFromRedis(user.Username))
+	ctx.JSON(http.StatusOK, gin.H{"token from redis": services.JWTAuthService().GetJWTAuthFromRedis(user.Username)})
 }
 
 func (uc *UserController) RegisterUserRoutes(rg *gin.RouterGroup) {
