@@ -113,3 +113,7 @@ func (maker *jwtServices) VerifyToken(token string) error {
 	}
 	return nil
 }
+
+func maintest() {
+
+}
