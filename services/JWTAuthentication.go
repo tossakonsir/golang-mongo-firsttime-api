@@ -114,6 +114,9 @@ func (maker *jwtServices) VerifyToken(token string) error {
 	return nil
 }
 
-func maintest() {
-
+func maintest() int {
+	a := 1
+	b := 2
+	c := a
+	return c + b
 }
